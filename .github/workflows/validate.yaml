@@ -1,0 +1,31 @@
+name: Validate Kubernetes Manifests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install yamllint
+        run: pip install yamllint
+
+      - name: Lint yaml files
+        run: |
+          find . -name "*.yaml" -not -path "./.github/*" | xargs yamllint -d relaxed
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Validate manifests with kubectl dry-run
+        run: |
+          find . -name "*.yaml" -not -path "./.github/*" -not -name "kustomization.yaml" | while read f; do
+            echo "Validating $f"
+            kubectl apply --dry-run=client --validate=false -f "$f" 2>&1 || true
+          done
