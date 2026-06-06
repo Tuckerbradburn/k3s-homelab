@@ -11,7 +11,6 @@ spec:
   tls:
     - hosts:
         - ntfy.bradmedia.net
-      secretName: bradmedia-wildcard-tls
   rules:
     - host: ntfy.bradmedia.net
       http:

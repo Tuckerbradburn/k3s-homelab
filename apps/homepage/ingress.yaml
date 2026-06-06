@@ -13,7 +13,6 @@ spec:
   tls:
     - hosts:
         - homepage.bradmedia.net
-      secretName: bradmedia-wildcard-tls
   rules:
     - host: homepage.bradmedia.net
       http:

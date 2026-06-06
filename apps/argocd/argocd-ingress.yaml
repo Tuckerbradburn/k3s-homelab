@@ -24,7 +24,6 @@ spec:
   tls:
     - hosts:
         - argocd.bradmedia.net
-      secretName: bradmedia-wildcard-tls
   rules:
     - host: argocd.bradmedia.net
       http:
