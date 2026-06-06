@@ -19,6 +19,8 @@ spec:
       - "--certificatesresolvers.cloudflare.acme.email=tuckerbradburn1@gmail.com"
       - "--certificatesresolvers.cloudflare.acme.storage=/data/acme.json"
       - "--certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
+      - "--providers.kubernetescrd.allowexternalnameservices=true"
+      - "--providers.kubernetesingress.allowexternalnameservices=true"
 
     env:
       - name: CF_DNS_API_TOKEN
