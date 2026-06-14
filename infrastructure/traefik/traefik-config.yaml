@@ -5,7 +5,9 @@
 # - HTTPS entrypoint
 # - HTTP -> HTTPS redirect
 # - ExternalName services allowed for reverse proxying to internal IPs
-# - 2 replicas spread across nodes for HA
+#
+# Note: Traefik is limited to 1 replica when using ACME cert resolver
+# acme.json cannot be shared across multiple instances
 #
 # Prerequisites - create secret before applying:
 # kubectl create secret generic cloudflare-api-token \
@@ -38,17 +40,6 @@ spec:
           secretKeyRef:
             name: cloudflare-api-token
             key: api-token
-
-    deployment:
-      replicas: 2
-
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: traefik
 
     ports:
       web:
