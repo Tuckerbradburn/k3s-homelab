@@ -1,7 +1,17 @@
+# infrastructure/traefik/traefik-config.yaml
+# Configures k3s built-in Traefik for:
+# - Cloudflare DNS-01 ACME challenge
+# - Wildcard cert for *.bradmedia.net
+# - HTTPS entrypoint
+# - HTTP -> HTTPS redirect
+# - ExternalName services allowed for reverse proxying to internal IPs
+# - 2 replicas spread across nodes for HA
+#
 # Prerequisites - create secret before applying:
 # kubectl create secret generic cloudflare-api-token \
 #   --namespace kube-system \
 #   --from-literal=api-token=<your-cloudflare-token>
+
 ---
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
@@ -28,6 +38,17 @@ spec:
           secretKeyRef:
             name: cloudflare-api-token
             key: api-token
+
+    deployment:
+      replicas: 2
+
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: traefik
 
     ports:
       web:
