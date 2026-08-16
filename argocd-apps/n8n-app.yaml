@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Tuckerbradburn/k3s-homelab-private.git
+    repoURL: https://github.com/Tuckerbradburn/k3s-homelab.git
     targetRevision: HEAD
     path: apps/n8n
   destination:
