@@ -70,10 +70,12 @@ spec:
               value: "5678"
             - name: N8N_PROTOCOL
               value: https
-            - name: WEBHOOK_URL
+            - name: N8N_WEBHOOK_URL
               value: https://n8n.bradmedia.net
             - name: GENERIC_TIMEZONE
               value: America/New_York
+            - name: N8N_TRUST_PROXY
+              value: "true"
           resources:
             requests:
               cpu: 100m
