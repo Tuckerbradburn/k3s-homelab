@@ -6,7 +6,7 @@ metadata:
   labels:
     app: n8n
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: n8n
@@ -29,8 +29,8 @@ spec:
               app: n8n
       containers:
         - name: n8n
-          image: n8nio/n8n:latest
-          imagePullPolicy: Always
+          image: n8nio/n8n:2.41.6
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5678
               name: http
